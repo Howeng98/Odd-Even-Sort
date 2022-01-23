@@ -18,6 +18,7 @@ DATASET = {
 #     "fIn": "27.in",
 #     "fOut": "27.out"
 # }
+
 SEQUENCIALVIERSION = f"{DATASET['index']}-Sequencial.txt"
 
 def getOutputPath(fileName: str):
