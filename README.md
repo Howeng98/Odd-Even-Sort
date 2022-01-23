@@ -1,2 +1,20 @@
-# Odd_Even_Sort
-NTHU 2021 Parallel Programming HW1 Odd Even Sort implemented with MPI to Speed up The Performance of QuickSort
+# 2021 Parallel Programming HW1 Odd-Even-Sort
+
+## 1. Implementation
+
+
+### Load Balancing
+
+### Data Preprocessing
+
+### Odd-Even Sort Phase
+
+## 2. Optimization
+
+## 3. Experiments
+
+### Strong Scalability
+
+### Time Profile
+
+## 4. Conclusion
