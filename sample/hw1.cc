@@ -1,6 +1,8 @@
 #include <cstdio>
 #include <stdlib.h>
 #include <mpi.h>
+#include <iostream>
+#include<boost/sort/spreadsort/spreadsort.hpp>
 
 int has_swap;
 void swap(float *a, float *b){
@@ -35,7 +37,7 @@ int partition (float arr[], int low, int high)
         // If current element is smaller than the pivot 
         if (arr[j] < pivot) 
         { 
-            i++; // increment index of smaller element 
+            i++; // Increment index of smaller element 
             swap(&arr[i], &arr[j]); 
         } 
     }
@@ -108,8 +110,10 @@ int main(int argc, char** argv){
 	//local sort , before goto proc swap
 	// quickSort(data, 0, n-1);
 	// new way, predefined qsort in C lib is better than quickSort()
+	// spreadsort is the most robust sort
 	t_start = MPI_Wtime();
-	qsort(data, n, sizeof(float), compare);
+	// qsort(data, n, sizeof(float), compare);
+	boost::sort::spreadsort::spreadsort(data, data+n);
 	t_end = MPI_Wtime();
 	CPU_Time += t_end - t_start;
 
