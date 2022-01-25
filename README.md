@@ -26,12 +26,30 @@ Let's explain how the odd-even phase work. In the even stage, there is only the 
 The even and odd stage are executed in while loops, it will be break when the **MPI_Reduce** result of ```MPI_LOR``` is false. Because when if there is no any **swap** happened, **has_swap** will be false, which is determined in the **merge-sort** part.
 
 ## 2. Optimization
-- Use % instead of %
+- Use & instead of %
+
+  Use bit operator instead of arithmetic operator is better for compiler.
+  
 - Avoid to use ternary operator (e.g. a ? b : c)
+
+  Ternary operator also is a heavy cost operation, try to avoid use it.
+ 
 - Reassign pointer target instead of copy the array value when doing Array memory swap
+
+  This is important, relocate array pointer instead of copying array elements one by one, save a lot of time.
+  
 - ++i > i++ > i+=1 > i=i+1
+
+  A code writing hint.
+
 - Pick a suitable sorting algorithm
+
+  In this repo case, for local sort before start odd-even-sort, speadsort > qsort(C Library) > self-defined quicksort.
+
 - Dynamic allocating, load balancing
+
+  Using dynamic way to allocate task job to each MPI rank.
+
 - Avoid function memory allocation
 - Avoid logical, duplicate redudant computing, use constant value
 
