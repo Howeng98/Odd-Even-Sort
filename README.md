@@ -26,37 +26,49 @@ Let's explain how the odd-even phase work. In the even stage, there is only the 
 The even and odd stage are executed in while loops, it will be break when the **MPI_Reduce** result of ```MPI_LOR``` is false. Because when if there is no any **swap** happened, **has_swap** will be false, which is determined in the **merge-sort** part.
 
 ## 2. Optimization
-- Use & instead of %
+1. Use & instead of %
 
   Use bit operator instead of arithmetic operator is better for compiler.
   
-- Avoid to use ternary operator (e.g. a ? b : c)
+2. Avoid to use ternary operator (e.g. a ? b : c)
 
   Ternary operator also is a heavy cost operation, try to avoid use it.
  
-- Reassign pointer target instead of copy the array value when doing Array memory swap
+3. Reassign pointer target instead of copy the array value when doing Array memory swap
 
   This is important, relocate array pointer instead of copying array elements one by one, save a lot of time.
   
-- ++i > i++ > i+=1 > i=i+1
+4. ++i > i++ > i+=1 > i=i+1
 
   A code writing hint.
 
-- Pick a suitable sorting algorithm
+5. Pick a suitable sorting algorithm
 
-  In this repo case, for local sort before start odd-even-sort, speadsort > qsort(C Library) > self-defined quicksort.
+  In this repo case, for local sort before start odd-even-sort, speadsort > qsort(C Library) > self-defined quicksort. It seems like qsort is optimized in the library, hence becareful when you choose sorting algorithm.
 
-- Dynamic allocating, load balancing
+6. Dynamic allocating, load balancing
 
   Using dynamic way to allocate task job to each MPI rank.
 
-- Avoid function memory allocation
-- Avoid logical, duplicate redudant computing, use constant value
+7. Avoid function memory allocation
+8. Avoid logical, duplicate redudant computing, use constant value
 
 ## 3. Experiments
 
-### Strong Scalability
+### System Spec
+- 4 Nodes, 12 CPUS ( if 1 cpu for 1 thread, then maximum is 48 threads in a same time )
+- OS: Arch Linux
+- Compilers: GCC 10.2.0, Clang 11.0.1
+- MPI: Intel MPI Library, Version 2019 Update 8
+- Scheduler: Slurm 20.02.5
+- Network: Infiniband
 
-### Time Profile
+### Strong Scalability (Speedup Factor)
+Different Process Performance        |  Speedup Factor
+:-------------------------:|:-------------------------:
+<!-- ![](./time/images/33_single_node_diff_proc_bar.png)  |  ![](./time/images/33_single_node_diff_proc_line.png) -->
+
+### Time Profile!
+
 
 ## 4. Conclusion
